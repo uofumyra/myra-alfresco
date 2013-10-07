@@ -1,0 +1,47 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<artifactId>myra-alfresco</artifactId>
+		<groupId>edu.utah.myra</groupId>
+		<version>1.0.0-SNAPSHOT</version>
+	</parent>
+	<groupId>edu.utah.myra</groupId>
+	<artifactId>alfresco-explorer</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
+	<packaging>war</packaging>
+	<name>MyRA Alfresco Explorer Integration</name>
+	<description>MyRA Alfresco Explorer Integration</description>
+	
+	<properties>
+		<final.name>alfresco</final.name>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.alfresco</groupId>
+			<artifactId>alfresco-explorer</artifactId>
+			<type>war</type>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<finalName>${final.name}</finalName>
+		<plugins>
+			<plugin>
+				<artifactId>maven-war-plugin</artifactId>
+				<configuration>
+					<overlays>
+						<!-- Overlay any of our configuration files with the stock Alfresco 
+							Explorer War -->
+						<overlay>
+							<groupId>org.alfresco</groupId>
+							<artifactId>alfresco-explorer</artifactId>
+						</overlay>
+					</overlays>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>

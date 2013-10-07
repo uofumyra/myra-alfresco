@@ -1,0 +1,158 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>edu.utah.myra</groupId>
+	<artifactId>myra-alfresco</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<name>MyRA Alfresco Integration Parent POM</name>
+	<description>MyRA Alfresco Integration Parent POM</description>
+
+	<properties>
+		<!-- Plugins -->
+		<maven.war.plugin.version>2.1.1</maven.war.plugin.version>
+
+		<alfresco.explorer.version>3.4d</alfresco.explorer.version>
+
+		<!-- Mailing List Properties -->
+		<mailing.list>https://www.lists.utah.edu/wws/info</mailing.list>
+
+		<!-- Source Control Properties -->
+		<git.read.url>git://git.bmi.utah.edu/myra/myra-drupal.git</git.read.url>
+		<git.dev.url>ssh://git@git.bmi.utah.edu:myra/myra-drupal.git</git.dev.url>
+		<git.web.url>http://git.bmi.utah.edu/</git.web.url>
+	</properties>
+
+	<modules>
+		<module>alfresco-explorer</module>
+	</modules>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.alfresco</groupId>
+				<artifactId>alfresco-explorer</artifactId>
+				<version>${alfresco.explorer.version}</version>
+				<type>war</type>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<build>
+		
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
+		
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<artifactId>maven-war-plugin</artifactId>
+					<version>${maven.war.plugin.version}</version>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+		
+	</build>
+
+	<issueManagement>
+		<system>jira</system>
+		<url>https://jira.chpc.utah.edu/browse/myra</url>
+	</issueManagement>
+
+	<mailingLists>
+		<mailingList>
+			<name>Project Email Distribution List</name>
+			<post>myra@lists.utah.edu</post>
+			<subscribe>${mailing.list}/myra</subscribe>
+			<unsubscribe>${mailing.list}/myra</unsubscribe>
+			<archive>${mailing.list}/myra</archive>
+		</mailingList>
+
+		<mailingList>
+			<name>MyRA Technical List</name>
+			<post>myra-technical@lists.utah.edu</post>
+			<subscribe>${mailing.list}/myra-technical</subscribe>
+			<unsubscribe>${mailing.list}/myra-technical</unsubscribe>
+			<archive>${mailing.list}/myra-technical</archive>
+		</mailingList>
+
+		<mailingList>
+			<name>MyRA Software Development List</name>
+			<post>myra-software-dev@lists.utah.edu</post>
+			<subscribe>${mailing.list}/myra-software-dev</subscribe>
+			<unsubscribe>${mailing.list}/myra-software-dev</unsubscribe>
+			<archive>${mailing.list}/myra-software-dev</archive>
+		</mailingList>
+	</mailingLists>
+
+	<licenses>
+		<license>
+			<name>Apache License</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.html</url>
+		</license>
+	</licenses>
+
+	<scm>
+		<connection>scm:git:${git.read.url}</connection>
+		<developerConnection>scm:git:${git.dev.url}</developerConnection>
+		<url>${git.web.url}</url>
+	</scm>
+
+	<developers>
+
+		<developer>
+			<id>dustin.schultz</id>
+			<name>N. Dustin Schultz</name>
+			<email>dustin.schultz@utah.edu</email>
+			<roles>
+				<role>Software Engineer</role>
+			</roles>
+		</developer>
+
+	</developers>
+
+	<profiles>
+		<!-- This profile speeds up the Maven lifecycle when using m2eclipse. It 
+			is activated by the m2e.version property which m2eclipse sets automatically. 
+			In other environments, it is not active. -->
+		<profile>
+			<id>m2e</id>
+			<properties>
+				<m2BuildDirectory>target</m2BuildDirectory>
+				<lifecycle.mapping.version>0.10.0</lifecycle.mapping.version>
+			</properties>
+			<activation>
+				<property>
+					<name>m2e.version</name>
+				</property>
+			</activation>
+			<build>
+				<directory>${m2BuildDirectory}</directory>
+				<plugins>
+					<plugin>
+						<groupId>org.maven.ide.eclipse</groupId>
+						<artifactId>lifecycle-mapping</artifactId>
+						<version>${lifecycle.mapping.version}</version>
+						<configuration>
+							<mappingId>customizable</mappingId>
+							<configurators>
+								<configurator id="org.maven.ide.eclipse.jdt.javaConfigurator" />
+								<configurator
+									id="org.maven.ide.eclipse.modello.modelloConfigurator" />
+								<configurator
+									id="org.maven.ide.eclipse.plexus.annotations.plexusConfigurator" />
+							</configurators>
+							<mojoExecutions>
+								<mojoExecution>org.apache.maven.plugins:maven-resources-plugin::</mojoExecution>
+							</mojoExecutions>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+</project>
